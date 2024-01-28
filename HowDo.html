@@ -175,13 +175,13 @@
         changeTab(true, false, false);
 
         // - メインメニュー用関数 - //
-        function edit(name, offset) {
+        function edit(name, address) {
             const value = prompt(`${name}の数値を入力`);
 
             if (!Number(value)) return;
 
-            h5gg.setValue(base + offset, value, "I32");
-            h5gg.setValue(base + offset + 4, "0", "I32");
+            h5gg.setValue(address, value, "I32");
+            h5gg.setValue(address + 4, "0", "I32");
         }
 
 
