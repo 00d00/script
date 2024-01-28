@@ -102,7 +102,7 @@
         let address
 
         fetch('https://ios-scripterr-rr.glitch.me/api/offset-data')
-          .then(response => return response.json())
+          .then(response => response.json())
           .then(data => {
             address = eval(data);
           });
