@@ -126,8 +126,8 @@
         this.base() + 0xE88 + 0x708,
       ]
     },
-    catsEye: function() { return this.catfood + 0x34C47C - 0x30 },
-    chars:   function() { return this.catfood + 0x2DBC          },
+    catsEye: function() { return this.catfood() + 0x34C47C - 0x30 },
+    chars:   function() { return this.catfood() + 0x2DBC          },
     error:   function() {
       return [
         this.base() + 0x2150,
