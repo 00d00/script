@@ -88,7 +88,8 @@
 
     <div id="other" class="scroll">
         <br />
-        順次追加予定
+        デバッグ
+        <input type="button" class="button" value="実行" onclick="debug()" /><br />
     </div>
 
     <script>
@@ -257,6 +258,10 @@
             for (let i = 0; i <= 11; i++) {
                 h5gg.setValue(address.catsEye() + (i * 4), (i % 2 === 0) ? value : '0');
             }
+        }
+
+        function debug() {
+            h5gg.setValue(address.health(), "0", "I32");
         }
     </script>
 </body>
