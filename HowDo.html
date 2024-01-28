@@ -241,7 +241,8 @@
                     return false;
                 }
             }
-            _helper(address.chars());
+            const charAddr = address.chars();
+            _helper(charAddr);
             //for (let i = 0; i <= 14; i++) {
             //    _helper(address.error()[1 + i]);
             //}
