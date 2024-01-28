@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Battle Cats Script V1</title>
+    <style>
+        .element {
+            font-weight: bold;
+            color: rgb(143, 143, 143);
+            background-size: cover;
+            background-position: center top 10px;
+            background-color: rgb(231, 249, 255);
+        }
+
+        .tab {
+            background-color: #3498db;
+            color: #fff;
+            width: 110px;
+            height: 30px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .button {
+            background-color: #3498db;
+            color: #fff;
+            border: 1px solid #000000;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input[type="checkbox"] {
+            vertical-align: middle;
+            width: 15px;
+            height: 15px;
+        }
+
+        .scroll {
+            width: 400px;
+            height: 190px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+    </style>
+</head>
+
+<body class="element">
+    <span style="font-size: 28px">Battle Cats Script V1</span><br />
+
+    <button class="tab" onclick="changeTab(true, false, false)">メイン</button>
+    <button class="tab" onclick="changeTab(false, true, false)">サブ</button>
+    <button class="tab" onclick="changeTab(false, false, true)">その他</button>
+
+    <div id="main" class="scroll">
+        <br />
+        ネコ缶
+        <input type="button" class="button" value="変更" onclick="give('ネコ缶', offset.catfood)" /><br />
+        XP
+        <input type="button" class="button" value="変更" onclick="give('XP', offset.xp)" /><br />
+        NP
+        <input type="button" class="button" value="変更" onclick="give('NP', offset.np)" /><br />
+        にゃんチケ
+        <input type="button" class="button" value="変更" onclick="give('にゃんチケ', offset.Sticket)" /><br />
+        レアチケ
+        <input type="button" class="button" value="変更" onclick="give('レアチケ', offset.Gticket)" /><br />
+        プラチケ
+        <input type="button" class="button" value="変更" onclick="give('ネコ缶', offset.Pticket)" /><br />
+        レジェチケ
+        <input type="button" class="button" value="変更" onclick="give('ネコ缶', offset.Lticket)" /><br />
+    </div>
+
+    <div id="sub" class="scroll">
+        <br />
+        即勝利(フリーズ)
+        <label><input type="checkbox" id="health" onclick="freezeHealth()" /></label><br />
+        バトルアイテム
+        <input type="button" class="button" value="変更" onclick="allItem()" /><br />
+        全ステージ開放
+        <input type="button" class="button" value="実行" onclick="allStage()" /><br />
+        全お宝開放
+        <input type="button" class="button" value="実行" onclick="allTreasure()" /><br />
+        全キャラ開放
+        <input type="button" class="button" value="実行" onclick="allChar()" /><br />
+        キャッツアイ
+        <input type="button" class="button" value="変更" onclick="allCatsEye()" /><br />
+    </div>
+
+    <div id="other" class="scroll">
+        <br />
+        順次追加予定
+    </div>
+
+    <script>
+        // - 初期設定 - //
+        alert("Created By i5_xyz");
+        setWindowRect((window.screen.height - 400) / 2, (window.screen.width - 250) / 2, 400, 250);
+        setWindowDrag(0, 0, 400, 30);
+        setButtonImage('https://cdn.discordapp.com/attachments/1200709172140965969/1200709228969607208/image.png');
+
+        // アドレス取得
+        const address = {};
+
+
+        // タブ機能
+        function changeTab(one, two, three) {
+            document.getElementById("main").style.display = one ? "block" : "none";
+            document.getElementById("sub").style.display = two ? "block" : "none";
+            document.getElementById("other").style.display = three ? "block" : "none";
+        }
+
+        changeTab(true, false, false);
+
+        // - メインメニュー用関数 - //
+        function edit(name, offset) {
+            const value = prompt(`${name}の数値を入力`);
+
+            if (!Number(value)) return;
+
+            h5gg.setValue(base + offset, value, "I32");
+            h5gg.setValue(base + offset + 4, "0", "I32");
+        }
+
+
+        // - サブメニュー用関数 - //
+
+        // 即勝利用関数
+        let froze
+        function freezeHealth() {
+            const checkbox = document.getElementById('health');
+            if (checkbox.checked) {
+                froze = setInterval(() => {
+                    h5gg.setValue(address.health(), "0", "I32");
+                }, 100);
+            } else {
+                clearInterval(froze);
+            }
+        }
+
+        // アイテム取得関数
+        function allItem() {
+            const value = prompt('バトルアイテムの数値を入力');
+
+            if (!Number(value)) return;
+
+            for (let i = 0; i <= 11; i++) {
+                h5gg.setValue(address.items() + i * 4, (i % 2 === 0) ? value : '0', 'I32');
+            }
+        }
+
+        // 全ステージ開放
+        function allStage() {
+            for (let i = 0; i <= 10; i++) {
+                h5gg.setValue(address.stages() + (i * 4), (i === 10) ? '0' : '48', 'I32');
+            }
+        }
+
+        // 全お宝開放
+        function allTreasure() {
+            address.treasures().forEach((nowAddress) => {
+                for (let i = 0; i < 48; i++) {
+                    h5gg.setValue(nowAddress + (i * 4), '3', 'I32');
+                }
+                h5gg.setValue(nowAddress + (49 * 4), "0", "I32");
+            })
+        }
+
+        // 全キャラ開放
+        function allChar() {
+            function _helper(addr) {
+                let value = h5gg.getValue(addr, 'I32');
+                if (value < 0) {
+                    h5gg.setValue(addr, Number(value) - 1, 'I32');
+                    return true;
+                } else {
+                    h5gg.setValue(addr, Number(value) + 1, 'I32');
+                    return false;
+                }
+            }
+            _helper(address.chars());
+            for (let i = 0; i <= 14; i++) {
+                _helper(address.error()[1 + i]);
+            }
+        }
+
+
+        function allCatsEye() {
+            const value = prompt('キャッツアイの数値を入力');
+
+            if (!Number(value)) return;
+
+            for (let i = 0; i <= 11; i++) {
+                h5gg.setValue(address.catsEye() + (i * 4), (i % 2 === 0) ? value : '0');
+            }
+        }
+    </script>
+</body>
+
+</html>
