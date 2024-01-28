@@ -146,10 +146,10 @@
         function allItem() {
             const value = prompt('バトルアイテムの数値を入力');
 
-            if (!Number(value)) return;
-
-            for (let i = 0; i <= 11; i++) {
-                h5gg.setValue(address.items() + i * 4, (i % 2 === 0) ? value : '0', 'I32');
+            if (Number(value)) {
+                for (let i = 0; i <= 11; i++) {
+                    h5gg.setValue(address.items() + i * 4, (i % 2 === 0) ? value : '0', 'I32');
+                }
             }
         }
 
