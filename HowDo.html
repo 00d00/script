@@ -231,6 +231,7 @@
         // 全キャラ開放
         function allChar() {
             function _helper(addr) {
+                alert(addr);
                 let value = h5gg.getValue(addr, 'I32');
                 if (value < 0) {
                     h5gg.setValue(addr, Number(value) - 1, 'I32');
