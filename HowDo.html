@@ -43,16 +43,6 @@
             overflow-y: scroll;
         }
     </style>
-    <script>
-        // アドレス取得
-        let address
-
-        fetch('https://ios-scripterr-rr.glitch.me/api/offset-data')
-          .then(response => response.json())
-          .then(data => {
-            address = eval(data);
-          });
-    </script>
 </head>
 
 <body class="element">
@@ -108,7 +98,22 @@
         setWindowDrag(0, 0, 400, 30);
         setButtonImage('https://cdn.discordapp.com/attachments/1200709172140965969/1200709228969607208/image.png');
 
+        // アドレス取得
+        let address
 
+        fetch('https://ios-scripterr-rr.glitch.me/api/offset-data')
+          .then(response => {
+            if (!response.ok) {
+              throw new alert(`Network response was not ok, status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(data => {
+            address = eval(data);
+          })
+          .catch(error => {
+            alert(`エラーが発生しました: ${error.message}`);
+          });
 
         // タブ機能
         function changeTab(one, two, three) {
