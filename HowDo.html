@@ -99,8 +99,13 @@
         setButtonImage('https://cdn.discordapp.com/attachments/1200709172140965969/1200709228969607208/image.png');
 
         // アドレス取得
-        const address = {};
+        let address
 
+        fetch('https://ios-scripterr-rr.glitch.me/api/offset-data')
+          .then(response => return response.json())
+          .then(data => {
+            address = eval(data);
+          });
 
         // タブ機能
         function changeTab(one, two, three) {
