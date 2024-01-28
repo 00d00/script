@@ -88,8 +88,7 @@
 
     <div id="other" class="scroll">
         <br />
-        デバッグ
-        <input type="button" class="button" value="実行" onclick="debug()" /><br />
+        順次追加予定
     </div>
 
     <script>
@@ -103,6 +102,7 @@
         let address
 
         address = {
+    _base:   function() { return Number(h5gg.getRangesList(0)[0].start) },
     base:    function() { return Number(h5gg.getRangesList(0)[0].start) + 0x15C5BA8 },
     catfood: function() { return this.base()    - 0xF8      },
     xp:      function() { return this.base()    + 0x28      },
@@ -111,7 +111,7 @@
     Gticket: function() { return this.Sticket() + 0x8       },
     Pticket: function() { return this.catfood() - 0x8360    },
     Lticket: function() { return this.Pticket() + 0x8       },
-    health:  function() { return this.base()    + 0x1605A48 },
+    health:  function() { return this._base()    + 0x1605A48 },
     items:   function() { return this.catfood() + 0x50D0    },
     stages:  function() { return this.base()    + 0x63C     },
     treasures: function() {
@@ -258,10 +258,6 @@
             for (let i = 0; i <= 11; i++) {
                 h5gg.setValue(address.catsEye() + (i * 4), (i % 2 === 0) ? value : '0');
             }
-        }
-
-        function debug() {
-            h5gg.setValue(address.health(), "0", "I32");
         }
     </script>
 </body>
