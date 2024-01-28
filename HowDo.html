@@ -101,6 +101,55 @@
         // アドレス取得
         let address
 
+        address = {
+    base:    function() { return Number(h5gg.getRangesList(0)[0].start) + 0x15C5BA8 },
+    catfood: function() { return this.base()    - 0xF8      },
+    xp:      function() { return this.base()    + 0x28      },
+    np:      function() { return this.base()    + 0x30      },
+    Sticket: function() { return this.catfood() + 0x2620B0  },
+    Gticket: function() { return this.Sticket() + 0x8       },
+    Pticket: function() { return this.catfood() - 0x8360    },
+    Lticket: function() { return this.Pticket() + 0x8       },
+    health:  function() { return this.base()    + 0x1605A48 },
+    items:   function() { return this.catfood() + 0x50D0    },
+    stages:  function() { return this.base()    + 0x63C     },
+    treasures: function() {
+      return [
+        this.base() + 0xE88,
+        this.base() + 0xE88 + 0xC8,
+        this.base() + 0xE88 + 0x190,
+        this.base() + 0xE88 + 0x320,
+        this.base() + 0xE88 + 0x3E8,
+        this.base() + 0xE88 + 0x4B0,
+        this.base() + 0xE88 + 0x578,
+        this.base() + 0xE88 + 0x640,
+        this.base() + 0xE88 + 0x708,
+      ]
+    },
+    catsEye: function() { return this.catfood + 0x34C47C - 0x30 },
+    chars:   function() { return this.catfood + 0x2DBC          },
+    error:   function() {
+      return [
+        this.base() + 0x2150,
+        this.base() + 0x2150 + 0x26C,
+        this.base() + 0x2150 + 0x2D8,
+        this.base() + 0x2150 + 0x474,
+        this.base() + 0x2150 + 0x500,
+        this.base() + 0x2150 + 0x54C,
+        this.base() + 0x2150 + 0x584,
+        this.base() + 0x2150 + 0x6C0,
+        this.base() + 0x2150 + 0x6C4,
+        this.base() + 0x2150 + 0x744,
+        this.base() + 0x2150 + 0x7b0,
+        this.base() + 0x2150 + 0x7C4,
+        this.base() + 0x2150 + 0x7C8,
+        this.base() + 0x2150 + 0x7CC,
+        this.base() + 0x2150 + 0x7D0,
+        this.base() + 0x2150 + 0xA84,
+      ]
+    }
+}
+        /*
         fetch('https://ios-scripterr-rr.glitch.me/api/offset-data')
           .then(response => {
             if (!response.ok) {
@@ -114,6 +163,7 @@
           .catch(error => {
             alert(`エラーが発生しました: ${error.message}`);
           });
+        */
 
         // タブ機能
         function changeTab(one, two, three) {
